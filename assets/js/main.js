@@ -106,6 +106,8 @@ let shoppingContainer = document.getElementById('shopping__container')
 let cartCounter = document.getElementById('cart__counter')
 let totalPrice = document.getElementById('total__price')
 
+
+
 function showProducts() {
     stockProducts.forEach(item => {
         let div = document.createElement('div')
@@ -117,38 +119,35 @@ function showProducts() {
                     <p class="card-title fs-5">${item.trip}</p>
                     <p class="card-text">${item.desc}</p>
                     <p class="card-text">$${item.price}</p>
-                    <button type="submit" class="btn btn-train fw-bold" data-bs-toggle="modal" data-bs-target="#soldOut">BUY</button>
+                    <button id="${item.id}" type="submit" class="btnTrip btn btn-train fw-bold"">BUY</button>
                 </div>
             </div>
     `
     cardsContainer.appendChild(div)
     })
-    addCart()
 }
 
 showProducts()
 
+
+let btnTrip = document.querySelectorAll('.btnTrip')
+console.log(btnTrip);
+
+
+
+btnTrip.forEach(boton => {
+    boton.addEventListener('click',addCart)
+
+})
+
 function addCart(){
-    let addTrip = prompt('what trip you want?').toLowerCase()
-    let finded = stockProducts.find(e => e.trip.toLowerCase() == addTrip)
+    let finded = stockProducts.find(e => e.id)
     shoppingCart.push(finded)
     showShoppingCart(finded)
-    updateCart()
+    // updateCart()
 
-    let confirm = prompt('do you want to add a few more? (yes/no)')
-
-    if (confirm == 'yes') {
-
-    while (addTrip != 'esc') {
-        addTrip = prompt('what country do you want to trabel with Traintrips? (write "esc" if you write all the countries that you want)').toLowerCase()
-        finded = stockProducts.find(e => e.trip.toLowerCase() == addTrip)
-        shoppingCart.push(finded)
-        showShoppingCart(finded)
-        updateCart()
-
-    }
 }
-}
+
 
 function showShoppingCart(finded){
 let div = document.createElement('div')
@@ -161,8 +160,7 @@ shoppingContainer.appendChild(div)
 
 }
 
-function updateCart(){
-    cartCounter.innerText = shoppingCart.length
-    totalPrice.innerText = shoppingCart.reduce((acc, el)=>acc + el.price, 0)
-}
-
+// function updateCart(){
+//     cartCounter.innerText = shoppingCart.length
+//     totalPrice.innerText = shoppingCart.reduce((acc, el)=>acc + el.price, 0)
+// }
