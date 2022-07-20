@@ -12,7 +12,6 @@
 //     return a - (a * b)
 // }
 
-
 // while (trip != 'accept') {
 //     switch (trip) {
 //         case 'spain':
@@ -64,15 +63,9 @@
 
 // pay()
 
-
-
-
-
-
 // let name = prompt("hi!! what's your name?")
 // alert(`hi ${name} welcome to TrainTrips!!`)
 // alert(" we are carrying out a poll to our clients to find out where they would like to travel")
-
 
 // const countries = []
 
@@ -99,19 +92,18 @@
 // del('esc')
 // console.log(countries)
 
-let shoppingCart = []
+let shoppingCart = [];
 
-let cardsContainer = document.getElementById('cards__container')
-let shoppingContainer = document.getElementById('shopping__container')
-let cartCounter = document.getElementById('cart__counter')
-let totalPrice = document.getElementById('total__price')
-
+let cardsContainer = document.getElementById("cards__container")
+let shoppingContainer = document.getElementById("shopping__container")
+let cartCounter = document.querySelector("#cart__counter")
+let totalPrice = document.getElementById("total__price")
 
 
 function showProducts() {
     stockProducts.forEach(item => {
         let div = document.createElement('div')
-        div.className = 'col-md-4 d-flex justify-content-center my-3'
+        div.className = '.product-rows col-md-4 d-flex justify-content-center my-3'
         div.innerHTML = `
             <div class="card text-center shadow-lg" style="width: 18rem;">
                 <img src="${item.img}" class="card-img-top rounded zoom" alt="photo of the Colosseum in Rome">
@@ -119,48 +111,62 @@ function showProducts() {
                     <p class="card-title fs-5">${item.trip}</p>
                     <p class="card-text">${item.desc}</p>
                     <p class="card-text">$${item.price}</p>
-                    <button id="${item.id}" type="submit" class="btnTrip btn btn-train fw-bold"">BUY</button>
+                    <button id="${item.id}" type="submit" class="btn btn-train fw-bold"">BUY</button>
                 </div>
             </div>
     `
     cardsContainer.appendChild(div)
+    let boton = document.getElementById(`${item.id}`)
+    boton.addEventListener("click",()=>{
+        addCart(item.id)
+    })
     })
 }
 
-showProducts()
+showProducts();
+
+// let btnTrip = document.querySelectorAll(".btnTrip");
+// console.log(btnTrip);
+
+// btnTrip.forEach((boton) => {
+//     boton.addEventListener("click", addCart);
+// });
 
 
-let btnTrip = document.querySelectorAll('.btnTrip')
-console.log(btnTrip);
-
-
-
-btnTrip.forEach(boton => {
-    boton.addEventListener('click',addCart)
-
-})
-
-function addCart(){
-    let finded = stockProducts.find(e => e.id)
+function addCart(id){
+    let finded = stockProducts.find(e => e.id ===id)
     shoppingCart.push(finded)
-    showShoppingCart(finded)
-    // updateCart()
-
+    console.log(shoppingCart)
+    showShoppingCart()
 }
 
 
-function showShoppingCart(finded){
-let div = document.createElement('div')
-div.className = 'productCart d-flex justify-content-between border-start border-4 border-danger bg-gray rounded-1 py-2 px-1'
-div.innerHTML = `
-                <p class="my-auto">${finded.trip}</p>
-                <p class="my-auto" border-plan>$${finded.price}</p>
-`
-shoppingContainer.appendChild(div)
-
+function showShoppingCart(){
+    let div = document.createElement('div')
+    div.className = 'productCart d-flex justify-content-between border-start border-4 border-danger bg-gray rounded-1 py-2 px-1'
+    for(const producto of shoppingCart){
+        div.innerHTML = `
+                    <p class="my-auto">${producto.trip}</p>
+                    <p class="my-auto">$${producto.price}</p>
+                    <button class='btn-remove btn btn-train fw-bold'>DELETE</button>
+    `
+    }
+    shoppingContainer.appendChild(div)
+    let removeProduct = div.querySelectorAll('.btn-remove')
+    for(let boton of removeProduct ){    
+        boton.addEventListener('click', borrarElemento)
+    }
+    updateCart()
 }
 
-// function updateCart(){
-//     cartCounter.innerText = shoppingCart.length
-//     totalPrice.innerText = shoppingCart.reduce((acc, el)=>acc + el.price, 0)
-// }
+function updateCart(){
+    let cantidad = document.querySelectorAll('#shopping__container > div')
+    cartCounter.innerText = cantidad.length
+    totalPrice.innerText = shoppingCart.reduce((acc, el)=>acc + el.price, 0)
+}
+
+function borrarElemento(e){
+    btn= e.target
+    btn.parentElement.remove()
+    updateCart()
+}
