@@ -33,7 +33,6 @@ showProducts();
 function addCart(id){
     let finded = stockProducts.find(e => e.id ===id)
     shoppingCart.push(finded)
-    console.log(shoppingCart)
     showShoppingCart()
 }
 
