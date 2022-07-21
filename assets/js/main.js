@@ -39,11 +39,12 @@ function addCart(id){
 
 function showShoppingCart(){
     let div = document.createElement('div')
-    div.className = 'productCart d-flex justify-content-between border-start border-4 border-danger bg-gray rounded-1 py-2 px-1'
+    div.className = 'productCart d-flex justify-content-between border-start border-4 border-danger bg-gray rounded-1 my-2 py-2 px-1'
     for(const producto of shoppingCart){
         div.innerHTML = `
                     <p class="my-auto">${producto.trip}</p>
                     <p class="my-auto">$${producto.price}</p>
+                    <p class="my-auto">${producto.quantityProd}</p>
                     <button class='btn-remove btn btn-train fw-bold'>X</button>
     `
     }
