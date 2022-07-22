@@ -1,5 +1,11 @@
 let shoppingCart = [];
 
+
+// class Cart{
+//     constructor(quantity,price,)
+// }
+
+
 let cardsContainer = document.getElementById("cards__container")
 let shoppingContainer = document.getElementById("shopping__container")
 let cartCounter = document.querySelector("#cart__counter")
@@ -16,53 +22,87 @@ function showProducts() {
                     <p class="card-title fs-5">${item.trip}</p>
                     <p class="card-text">${item.desc}</p>
                     <p class="card-text">$${item.price}</p>
-                    <button id="${item.id}" type="submit" class="btn btn-train fw-bold"">BUY</button>
+                    <button id="btn${item.id}" type="submit" class="btnBuy btn btn-train fw-bold"">BUY</button>
                 </div>
             </div>
     `
-    cardsContainer.appendChild(div)
-    let button = document.getElementById(`${item.id}`)
-    button.addEventListener("click",()=>{
-        addCart(item.id)
-    })
+        cardsContainer.appendChild(div)
+        let button = document.getElementById(`btn${item.id}`)
+        button.addEventListener("click", () => {
+            addCart(item.id)
+        })
     })
 }
 
-showProducts();
+showProducts()
 
-function addCart(id){
-    let finded = stockProducts.find(e => e.id ===id)
-    shoppingCart.push(finded)
+// function addcart(e){
+//     btnFinded = e.target
+//     btn.parentElement.parentElement
+//     console.log(btn.parentElement.parentElement);
+// }
+function addCart(id) {
+    let finded = stockProducts.find(e=>e.id === id)
+    let exist = shoppingCart.includes(finded)
+    // console.log(finded);
+    if(exist){
+        finded.quantityProd += 1
+        console.log(finded.quantityProd)
+        console.log(shoppingCart);
+        }else{
+            shoppingCart.push(finded)
+            console.log(shoppingCart)
+        }
     showShoppingCart()
+    // console.log(shoppingCart);
+    // let finded = stockProducts.find(e => e.id === id)
+    // let exist = shoppingCart.find(e => e.id === id)
+    // console.log(exist);
+    // if (exist) {
+    //     exist.quantityProd + 1
+    // }
+    // else {
+    //     shoppingCart.push(finded)
+    // }
+    // showShoppingCart()
 }
 
-function showShoppingCart(){
-    let div = document.createElement('div')
-    div.className = 'productCart d-flex justify-content-between border-start border-4 border-danger bg-gray rounded-1 my-2 py-2 px-1'
-    for(const producto of shoppingCart){
-        div.innerHTML = `
-                    <p class="my-auto">${producto.trip}</p>
-                    <p class="my-auto">$${producto.price}</p>
-                    <p class="my-auto">${producto.quantityProd}</p>
+
+function showShoppingCart() {
+    shoppingContainer.innerHTML =''
+    for (const product of shoppingCart) {
+        let div = document.createElement('div')
+        div.className = 'productCart d-flex justify-content-between border-start border-4 border-danger bg-gray rounded-1 py-2 px-1'
+        div.innerHTML += `
+                    <p class="my-auto">${product.trip}</p>
+                    <p class="my-auto">$${product.price}</p>
+                    <p id='quantity__counter' class="my-auto">${product.quantityProd}</p>
                     <button class='btn-remove btn btn-train fw-bold'>X</button>
     `
-    }
     shoppingContainer.appendChild(div)
     let removeProduct = div.querySelectorAll('.btn-remove')
-    for(let button of removeProduct ){    
+    for (let button of removeProduct) {
         button.addEventListener('click', removeElement)
+        }
     }
     updateCart()
 }
 
-function updateCart(){
+function updateCart() {
     let quantity = document.querySelectorAll('#shopping__container > div')
     cartCounter.innerText = quantity.length
-    totalPrice.innerText = shoppingCart.reduce((acc, el)=>acc + el.price, 0)
+    uptateTotal()
 }
 
-function removeElement(e){
-    btn= e.target
-    btn.parentElement.remove()
+function removeElement(e) {
+    btn = e.target
+    let padre = btn.parentElement
+    padre.remove()
+    shoppingCart.splice(e,1)
+    uptateTotal()
     updateCart()
+}
+
+function uptateTotal() {
+    totalPrice.innerText = shoppingCart.reduce((acc, el) => acc + el.price, 0)
 }
