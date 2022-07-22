@@ -1,11 +1,5 @@
 let shoppingCart = [];
 
-
-// class Cart{
-//     constructor(quantity,price,)
-// }
-
-
 let cardsContainer = document.getElementById("cards__container")
 let shoppingContainer = document.getElementById("shopping__container")
 let cartCounter = document.querySelector("#cart__counter")
@@ -36,11 +30,6 @@ function showProducts() {
 
 showProducts()
 
-// function addcart(e){
-//     btnFinded = e.target
-//     btn.parentElement.parentElement
-//     console.log(btn.parentElement.parentElement);
-// }
 function addCart(id) {
     let finded = stockProducts.find(e=>e.id === id)
     let exist = shoppingCart.includes(finded)
@@ -48,7 +37,7 @@ function addCart(id) {
     if(exist){
         finded.quantityProd += 1
         finded.price += finded.price
-        console.log(finded.innerText);
+        console.log(finded.price);
         // console.log(finded.quantityProd)
         // console.log(shoppingCart);
         }else{
@@ -56,19 +45,7 @@ function addCart(id) {
             // console.log(shoppingCart)
         }
     showShoppingCart()
-    // console.log(shoppingCart);
-    // let finded = stockProducts.find(e => e.id === id)
-    // let exist = shoppingCart.find(e => e.id === id)
-    // console.log(exist);
-    // if (exist) {
-    //     exist.quantityProd + 1
-    // }
-    // else {
-    //     shoppingCart.push(finded)
-    // }
-    // showShoppingCart()
 }
-
 
 function showShoppingCart() {
     shoppingContainer.innerHTML =''
