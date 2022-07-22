@@ -47,12 +47,13 @@ function addCart(id) {
     // console.log(finded);
     if(exist){
         finded.quantityProd += 1
-        finded.price = finded.price * finded.quantityProd
-        console.log(finded.quantityProd)
-        console.log(shoppingCart);
+        finded.price += finded.price
+        console.log(finded.innerText);
+        // console.log(finded.quantityProd)
+        // console.log(shoppingCart);
         }else{
             shoppingCart.push(finded)
-            console.log(shoppingCart)
+            // console.log(shoppingCart)
         }
     showShoppingCart()
     // console.log(shoppingCart);
