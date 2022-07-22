@@ -47,6 +47,7 @@ function addCart(id) {
     // console.log(finded);
     if(exist){
         finded.quantityProd += 1
+        finded.price = finded.price * finded.quantityProd
         console.log(finded.quantityProd)
         console.log(shoppingCart);
         }else{
@@ -72,7 +73,7 @@ function showShoppingCart() {
     shoppingContainer.innerHTML =''
     for (const product of shoppingCart) {
         let div = document.createElement('div')
-        div.className = 'productCart d-flex justify-content-between border-start border-4 border-danger bg-gray rounded-1 py-2 px-1'
+        div.className = 'productCart d-flex justify-content-between border-start border-4 border-danger bg-gray rounded-1  my-1 py-2 px-1'
         div.innerHTML += `
                     <p class="my-auto">${product.trip}</p>
                     <p class="my-auto">$${product.price}</p>
